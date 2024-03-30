@@ -9,6 +9,7 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private string _apiPort = System.Environment.GetEnvironmentVariable("API_PORT") ?? "5206";
+    private string _apiHost = System.Environment.GetEnvironmentVariable("API_HOST") ?? "localhost";
 
     public HomeController(ILogger<HomeController> logger)
     {
@@ -25,7 +26,7 @@ public class HomeController : Controller
 	public async Task<IActionResult> Pi(int digits) {
 		//Console.WriteLine($"Received post request, digits={digits}, API response {ViewData["Digits"]}");
 		using (var client = new HttpClient()) {
-			client.BaseAddress = new Uri($"http://localhost:{_apiPort}");
+			client.BaseAddress = new Uri($"http://{_apiHost}:{_apiPort}");
 			var response = await client.GetStringAsync($"pi?digits={digits}");
 			if (response == null) {
 				ViewData["Digits"] = "No API response";

@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  piapp:
+    image: ${DOCKER_REGISTRY-}piapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 12000:8080
+      - 12001:8081
+    environment:
+      - API_HOST=piapi
+      - API_PORT=13000
+  piapi:
+    image: ${DOCKER_REGISTRY-}simpleapi
+    ports:
+      - 13000:8080
+      - 13001:8081
+
